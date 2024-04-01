@@ -1,0 +1,130 @@
+#python code
+#micro project
+#titled: CRYPTOGRAPHY(ENCRYPTION AND DECRYPTION)
+# Source code as follows...
+
+
+# Import tkinter modules and use aliases
+import tkinter as tk
+import tkinter.messagebox as messagebox
+
+# Define a function to encrypt or decrypt text using XOR cipher
+def encrypt_decrypt(text, key):
+    """Encrypt or decrypt text using XOR cipher with a given key."""
+    encrypted = ''.join(chr(ord(x) ^ key) for x in text)
+    return encrypted
+
+# Define a function to encrypt the text in the plaintext_text widget
+def encrypt():
+    """Encrypt the text in the plaintext_text widget using the key from the key_entry widget."""
+    try:
+        # Get the key as an integer from the key_entry widget
+        key = int(key_entry.get())
+        # Get the plaintext from the plaintext_text widget and strip any whitespace
+        plaintext = plaintext_text.get("1.0", tk.END).strip()
+        # Encrypt the plaintext using the encrypt_decrypt function
+        encrypted = encrypt_decrypt(plaintext, key)
+        # Delete the plaintext from the plaintext_text widget
+        plaintext_text.delete("1.0", tk.END)
+        # Insert the encrypted text into the plaintext_text widget
+        plaintext_text.insert("1.0", encrypted)
+        # Delete the key from the key_entry widget
+        key_entry.delete(0, tk.END)
+    except Exception as e:
+        # Show an error message if something goes wrong
+        messagebox.showerror('Error', str(e))
+
+# Define a function to decrypt the text in the plaintext_text widget
+def decrypt():
+    """Decrypt the text in the plaintext_text widget using the key from the key_entry widget."""
+    try:
+        # Get the key as an integer from the key_entry widget
+        key = int(key_entry.get())
+        # Get the encrypted text from the plaintext_text widget and strip any whitespace
+        encrypted = plaintext_text.get("1.0", tk.END).strip()
+        # Decrypt the encrypted text using the encrypt_decrypt function
+        decrypted = encrypt_decrypt(encrypted, key)
+        # Delete the encrypted text from the plaintext_text widget
+        plaintext_text.delete("1.0", tk.END)
+        # Insert the decrypted text into the plaintext_text widget
+        plaintext_text.insert("1.0", decrypted)
+        # Delete the key from the key_entry widget
+        key_entry.delete(0, tk.END)
+    except Exception as e:
+        # Show an error message if something goes wrong
+        messagebox.showerror('Error', str(e))
+
+# Define a function to reset the widgets and clear any text or key
+def reset():
+    """Reset the widgets and clear any text or key."""
+    # Delete any text from the key_entry widget and focus on it
+    key_entry.delete(0, tk.END)
+    key_entry.focus()
+    # Delete any text from the plaintext_text widget
+    plaintext_text.delete("1.0", tk.END)
+
+# Define a function to exit the application after confirmation
+def iexit():
+    """Exit the application after confirmation."""
+    # Ask for confirmation before exiting
+    iexit = messagebox.askyesno("XOR Encryption/Decryption", "Confirm if you want to exit")
+    if iexit > 0:
+        # Destroy the root window and quit
+        root.destroy()
+        return
+
+# Create a root window with a title and a size
+root = tk.Tk()
+root.title("Encryption and Decryption Data")
+root.geometry("1920x1000+0+0")
+
+# Create a frame for holding the action buttons (encrypt, decrypt, reset, exit)
+action_frame = tk.Frame(root)
+action_frame.pack()
+
+# Create a button for encrypting and add it to the action frame
+encrypt_button = tk.Button(action_frame, font=('arial', 24, 'bold'), width=10, text="Encrypt", command=encrypt)
+encrypt_button.pack(side=tk.LEFT, padx=10)
+
+# Create a button for decrypting and add it to the action frame
+decrypt_button = tk.Button(action_frame, font=('arial', 24, 'bold'), width=10, text="Decrypt", command=decrypt)
+decrypt_button.pack(side=tk.LEFT, padx=10)
+
+# Create a button for resetting and add it to the action frame
+reset_button = tk.Button(action_frame, font=('arial', 24, 'bold'), width=10, text="Reset", command=reset)
+reset_button.pack(side=tk.LEFT, padx=10)
+
+# Create a button for exiting and add it to the action frame
+exit_button = tk.Button(action_frame, font=('arial', 24, 'bold'), width=10, text="Exit", command=iexit)
+exit_button.pack(side=tk.LEFT, padx=10)
+
+# Create a frame for holding the key entry and label
+key_frame = tk.Frame(root)
+key_frame.pack(pady=20)
+
+# Create a label for entering the key and add it to the key frame
+key_label = tk.Label(key_frame, font=('arial', 24, 'bold'), text="Enter Key")
+key_label.pack(side=tk.LEFT, padx=10)
+
+# Create an entry widget for entering the key and add it to the key frame
+key_entry = tk.Entry(key_frame, font=('arial', 24, 'bold'), width=12, justify='center', show="*")
+key_entry.pack(side=tk.LEFT, padx=10)
+
+# Create a frame for holding the plaintext text widget and label
+plain_frame = tk.Frame(root)
+plain_frame.pack(pady=20)
+
+# Create a label for entering the plaintext and add it to the plain frame
+plaintext_label = tk.Label(plain_frame, font=('arial', 24, 'bold'), text="Enter Plain Text: ")
+plaintext_label.pack(pady=20)
+
+# Create a text widget for entering the plaintext and add it to the plain frame
+plaintext_text = tk.Text(plain_frame, font=('arial', 24, 'bold'), width=60, height=18)
+plaintext_text.pack(pady=20)
+
+# Start the main loop of the root window
+root.mainloop()
+
+
+
+#THE END
